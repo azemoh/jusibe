@@ -6,10 +6,10 @@
 ```javascript
 var Jusibe = require('jusibe');
 
-var pubKey = 'xxx000xxxxx000xxxxx000xxxx';
+var publicKey = 'xxx000xxxxx000xxxxx000xxxx';
 var accessToken = 'xxx000xxxxx000xxxxx000xxxx';
 
-var jusibe = new Jusibe(pubKey, accessToken);
+var jusibe = new Jusibe(publicKey, accessToken);
 ```
 
 ### Check SMS Credits
@@ -37,10 +37,10 @@ jusibe.sendSMS(payload, function (err, body) {
 
 ### Check SMS status
 ```javascript
-  jusibe.deliveryStatus('vdw362h', function (err, body) {
-    if (err) console.log('Error: ' + err);
-    else console.log(body);
-  });
+jusibe.deliveryStatus('vdw362h', function (err, body) {
+  if (err) console.log('Error: ' + err);
+  else console.log(body);
+});
 ```
 
  
