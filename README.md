@@ -46,3 +46,5 @@ jusibe.deliveryStatus('eq16v6vd26', function (err, res) {
 ```
 
 ## License
+
+Available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
