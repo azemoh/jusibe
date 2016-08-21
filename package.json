@@ -1,7 +1,7 @@
 {
   "name": "jusibe",
   "version": "0.0.1",
-  "description": "JavaScript CLient for Jusibe API SMS Service",
+  "description": "JavaScript client for Jusibe.com SMS API sevice",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,7 @@
     "SMS",
     "API"
   ],
-  "author": "Joshua Azemoh <joshazemoh@gmail.com (http://azemoh.com)> ",
+  "author": "Joshua Azemoh <joshazemoh@gmail.com> (http://azemoh.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/azemoh/jusibe/issues"

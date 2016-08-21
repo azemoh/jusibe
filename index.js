@@ -6,7 +6,7 @@ var baseUrl = 'https://jusibe.com/smsapi';
  * Create new Jusibe instances
  * @param {String} publicKey Jusibe Public Key
  * @param {String} accessToken Jusibe Access Token
- * return {Jusibe}
+ * @return {Jusibe}
  */
 module.exports = function (publicKey, accessToken) {
 
