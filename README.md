@@ -1,6 +1,8 @@
 # Jusibe Node.js Client
 > JavaScript client for Jusibe.com SMS API sevice
 
+[![npm package](https://nodei.co/npm/jusibe.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/jusibe/)
+
 [![Build Status](https://travis-ci.org/azemoh/jusibe.svg?branch=master)](https://travis-ci.org/azemoh/jusibe)
 
 ## Usage
