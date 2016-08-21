@@ -34,16 +34,7 @@ module.exports = function (publicKey, accessToken) {
 
     request.get([baseUrl, '/send_sms/'].join(''),
       options, function (error, responce, body) {
-        if (callback) {
-
-          // Failure
-          if (error && responce.statusCode !== 200) {
-            error = body;
-            body = null;
-          }
-
-          return callback(error, body);
-        }
+        return handleResponse(error, responce, body, callback);
       });
   };
 
@@ -57,19 +48,8 @@ module.exports = function (publicKey, accessToken) {
 
     request.get([baseUrl, '/get_credits/'].join(''),
       this.options, function (error, responce, body) {
-
-        if (callback) {
-
-          // Failure
-          if (error && responce.statusCode !== 200) {
-            error = body;
-            body = null;
-          }
-
-          return callback(error, body);
-        }
+        return handleResponse(error, responce, body, callback);
       });
-
   };
 
   /**
@@ -85,21 +65,24 @@ module.exports = function (publicKey, accessToken) {
 
     request.get([baseUrl, '/delivery_status/'].join(''),
       options, function (error, responce, body) {
-
-        if (callback) {
-
-          // Failure
-          if (error && responce.statusCode !== 200) {
-            error = body;
-            body = null;
-          }
-
-          return callback(error, body);
-        }
+        return handleResponse(error, responce, body, callback);
       });
   };
 
 };
+
+
+// Helpers
+
+function handleResponse (error, responce, body, callback) {
+  // Failure
+  if (error && responce.statusCode !== 200) {
+    error = body;
+    body = null;
+  }
+
+  return callback(error, body);
+}
 
 Object.merge = function (src, dest) {
   for (var key in src) {
