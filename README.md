@@ -45,4 +45,4 @@ jusibe.deliveryStatus('eq16v6vd26', function (err, res) {
 });
 ```
 
- 
+## License

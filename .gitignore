@@ -1,3 +1,4 @@
 /node_modules
 /.vscode
 /examples/client.dev.js
+npm-debug.log
