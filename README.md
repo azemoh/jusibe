@@ -1,6 +1,8 @@
 # Jusibe Node.js Client
 > JavaScript client for Jusibe.com SMS API sevice
 
+[![Build Status](https://travis-ci.org/azemoh/jusibe.svg?branch=master)](https://travis-ci.org/azemoh/jusibe)
+
 ## Usage
 
 ```javascript
