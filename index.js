@@ -33,8 +33,8 @@ module.exports = function (publicKey, accessToken) {
     var options = Object.merge(this.options, { qs: payload });
 
     request.get([baseUrl, '/send_sms/'].join(''),
-      options, function (error, responce, body) {
-        return handleResponse(error, responce, body, callback);
+      options, function (error, response, body) {
+        return handleResponse(error, response, body, callback);
       });
   };
 
@@ -47,8 +47,8 @@ module.exports = function (publicKey, accessToken) {
   this.getCredits = function (callback) {
 
     request.get([baseUrl, '/get_credits/'].join(''),
-      this.options, function (error, responce, body) {
-        return handleResponse(error, responce, body, callback);
+      this.options, function (error, response, body) {
+        return handleResponse(error, response, body, callback);
       });
   };
 
@@ -64,8 +64,8 @@ module.exports = function (publicKey, accessToken) {
     var options = Object.merge(this.options, { qs: { message_id: messageID } });
 
     request.get([baseUrl, '/delivery_status/'].join(''),
-      options, function (error, responce, body) {
-        return handleResponse(error, responce, body, callback);
+      options, function (error, response, body) {
+        return handleResponse(error, response, body, callback);
       });
   };
 
@@ -74,14 +74,14 @@ module.exports = function (publicKey, accessToken) {
 
 // Helpers
 
-function handleResponse (error, responce, body, callback) {
+function handleResponse (error, response, body, callback) {
   // Failure
-  if (error && responce.statusCode !== 200) {
+  if (response.statusCode !== 200) {
     error = body;
     body = null;
   }
 
-  return callback(error, body);
+  return callback(error, response);
 }
 
 Object.merge = function (src, dest) {
