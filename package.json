@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/azemoh/jusibe/issues"
   },
-  "homepage": "https://github.com/azemoh/jusibe#readme"
+  "homepage": "https://github.com/azemoh/jusibe#readme",
+  "dependencies": {
+    "request": "^2.74.0"
+  }
 }
