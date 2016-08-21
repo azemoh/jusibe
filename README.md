@@ -5,6 +5,12 @@
 
 [![Build Status](https://travis-ci.org/azemoh/jusibe.svg?branch=master)](https://travis-ci.org/azemoh/jusibe)
 
+## Installation
+
+```bash
+npm install jusibe
+```
+
 ## Usage
 
 ```javascript
