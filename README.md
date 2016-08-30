@@ -1,5 +1,5 @@
 # Jusibe Node.js Client
-> JavaScript client for Jusibe.com SMS API sevice
+> JavaScript client for Jusibe.com SMS API service
 
 [![npm package](https://nodei.co/npm/jusibe.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/jusibe/)
 
@@ -16,8 +16,8 @@ npm install jusibe
 ```javascript
 var Jusibe = require('jusibe');
 
-var publicKey = 'xxx000xxxxx000xxxxx000xxxx';
-var accessToken = 'xxx000xxxxx000xxxxx000xxxx';
+var publicKey = process.env.JUSIBE_PUBLIC_KEY;
+var accessToken = process.env.JUSIBE_ACCESS_TOKEN;
 
 var jusibe = new Jusibe(publicKey, accessToken);
 ```
@@ -25,8 +25,10 @@ var jusibe = new Jusibe(publicKey, accessToken);
 ### Check SMS Credits
 ```javascript
 jusibe.getCredits(function (err, res) {
-  if (res.statusCode === 200) console.log(res.body);
-  else console.log(err);
+  if (res.statusCode === 200)
+    console.log(res.body);
+  else
+    console.log(err);
 });
 ```
 
@@ -39,8 +41,10 @@ var payload = {
 };
 
 jusibe.sendSMS(payload, function (err, res) {
-  if (res.statusCode === 200) console.log(res.body);
-  else console.log(err);
+  if (res.statusCode === 200)
+    console.log(res.body);
+  else
+    console.log(err);
 });
 
 ```
@@ -48,8 +52,10 @@ jusibe.sendSMS(payload, function (err, res) {
 ### Check SMS status
 ```javascript
 jusibe.deliveryStatus('eq16v6vd26', function (err, res) {
-  if (res.statusCode === 200) console.log(res.body);
-  else console.log(err);
+  if (res.statusCode === 200)
+    console.log(res.body);
+  else
+    console.log(err);
 });
 ```
 

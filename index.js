@@ -73,7 +73,15 @@ module.exports = function (publicKey, accessToken) {
 
 
 // Helpers
-
+/**
+ * Response handler
+ * @function
+ * @param {Object} error Error Object
+ * @param {Object} response Response Object
+ * @param {Object} body
+ * @param {Function} callback Callback function.
+ * @return {Function}
+ */
 function handleResponse (error, response, body, callback) {
   // Failure
   if (response.statusCode !== 200) {
@@ -84,6 +92,13 @@ function handleResponse (error, response, body, callback) {
   return callback(error, response);
 }
 
+/**
+ * Merge properties in two Objects
+ * @function
+ * @param {Object} src Source object
+ * @param {Object} dest Destination object
+ * @return {Object}
+ */
 Object.merge = function (src, dest) {
   for (var key in src) {
     dest[key] = src[key];
