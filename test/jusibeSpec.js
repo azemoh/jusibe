@@ -29,4 +29,15 @@ describe('Jusibe', function () {
     assert(jusibe.options.auth.pass === 'access_token');
   });
 
+  it('Has a sendSMS function', function () {
+    expect(jusibe['sendSMS']).to.be.a('function');
+  });
+
+  it('Has a getCredits function', function () {
+    expect(jusibe['getCredits']).to.be.a('function');
+  });
+
+  it('Has a deliveryStatus function', function () {
+    expect(jusibe['deliveryStatus']).to.be.a('function');
+  });
 });
