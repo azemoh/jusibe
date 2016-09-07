@@ -100,7 +100,9 @@ function handleResponse(error, response, body, callback) {
  */
 Jusibe.merge = function (src, dest) {
   for (var key in src) {
-    dest[key] = src[key];
+    if (src.hasOwnProperty(key)) {
+      dest[key] = src[key];
+    }
   }
 
   return dest;
