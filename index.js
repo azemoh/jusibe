@@ -8,7 +8,7 @@ var baseUrl = 'https://jusibe.com/smsapi';
  * @param {String} accessToken Jusibe Access Token
  * @return {Jusibe}
  */
-module.exports = function (publicKey, accessToken) {
+function Jusibe(publicKey, accessToken) {
 
   if (publicKey === undefined || accessToken === undefined) {
     throw new Error('Provide both publicKey and accessToken');
@@ -21,55 +21,54 @@ module.exports = function (publicKey, accessToken) {
     },
     json: true
   };
+}
 
-  /**
-   * Send SMS
-   * @function
-   * @param {Object} payload sms Object
-   * @param {Function} callback Callback function
-   * @return {Function}
-   */
-  this.sendSMS = function (payload, callback) {
-    var options = Object.merge(this.options, { qs: payload });
+/**
+ * Send SMS
+ * @function
+ * @param {Object} payload sms Object
+ * @param {Function} callback Callback function
+ * @return {Function}
+ */
+Jusibe.prototype.sendSMS = function (payload, callback) {
+  var options = Jusibe.merge(this.options, { qs: payload });
 
-    request.get([baseUrl, '/send_sms/'].join(''),
-      options, function (error, response, body) {
-        return handleResponse(error, response, body, callback);
-      });
-  };
-
-  /**
-   * Get Available Jusibe Credits
-   * @function
-   * @param {Funtion} callback Callback function
-   * @return {Function}
-   */
-  this.getCredits = function (callback) {
-
-    request.get([baseUrl, '/get_credits/'].join(''),
-      this.options, function (error, response, body) {
-        return handleResponse(error, response, body, callback);
-      });
-  };
-
-  /**
-   * Check the delivery status of SMS sent
-   * @function
-   * @param {String} messageID ID of the message
-   * @param {Function} callback Callback function
-   * @return {Function}
-   */
-  this.deliveryStatus = function (messageID, callback) {
-
-    var options = Object.merge(this.options, { qs: { message_id: messageID } });
-
-    request.get([baseUrl, '/delivery_status/'].join(''),
-      options, function (error, response, body) {
-        return handleResponse(error, response, body, callback);
-      });
-  };
-
+  request.get([baseUrl, '/send_sms/'].join(''),
+    options, function (error, response, body) {
+      return handleResponse(error, response, body, callback);
+    });
 };
+
+/**
+ * Get Available Jusibe Credits
+ * @function
+ * @param {Funtion} callback Callback function
+ * @return {Function}
+ */
+Jusibe.prototype.getCredits = function (callback) {
+
+  request.get([baseUrl, '/get_credits/'].join(''),
+    this.options, function (error, response, body) {
+      return handleResponse(error, response, body, callback);
+    });
+};
+
+/**
+ * Check the delivery status of SMS sent
+ * @function
+ * @param {String} messageID ID of the message
+ * @param {Function} callback Callback function
+ * @return {Function}
+ */
+Jusibe.prototype.deliveryStatus = function (messageID, callback) {
+  var options = Jusibe.merge(this.options, { qs: { message_id: messageID } });
+
+  request.get([baseUrl, '/delivery_status/'].join(''),
+    options, function (error, response, body) {
+      return handleResponse(error, response, body, callback);
+    });
+};
+
 
 
 // Helpers
@@ -82,7 +81,7 @@ module.exports = function (publicKey, accessToken) {
  * @param {Function} callback Callback function.
  * @return {Function}
  */
-function handleResponse (error, response, body, callback) {
+function handleResponse(error, response, body, callback) {
   // Failure
   if (response.statusCode !== 200) {
     error = body;
@@ -99,10 +98,12 @@ function handleResponse (error, response, body, callback) {
  * @param {Object} dest Destination object
  * @return {Object}
  */
-Object.merge = function (src, dest) {
+Jusibe.merge = function (src, dest) {
   for (var key in src) {
     dest[key] = src[key];
   }
 
   return dest;
 };
+
+module.exports = Jusibe;
