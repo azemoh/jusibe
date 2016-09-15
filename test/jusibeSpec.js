@@ -65,3 +65,9 @@ describe('Jusibe.merge', function () {
     expect(result.qs).not.to.be.null
   });
 });
+
+describe('Jusibe.makeRequest', function () {
+  it('Has a makeRequest function', function () {
+    expect(Jusibe['makeRequest']).to.be.a('function');
+  });
+})
