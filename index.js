@@ -1,6 +1,6 @@
 
 var request = require('request');
-var baseUrl = 'https://jusibe.com/smsapi';
+var baseUrl = 'https://jusibe.com/smsapi/';
 
 /**
  * Create new Jusibe instances
@@ -32,11 +32,7 @@ function Jusibe(publicKey, accessToken) {
  */
 Jusibe.prototype.sendSMS = function (payload, callback) {
   var options = Jusibe.merge(this.options, { qs: payload });
-
-  request.get([baseUrl, '/send_sms/'].join(''),
-    options, function (error, response, body) {
-      return handleResponse(error, response, body, callback);
-    });
+  return Jusibe.makeRequest('send_sms/', options, callback)
 };
 
 /**
@@ -46,11 +42,7 @@ Jusibe.prototype.sendSMS = function (payload, callback) {
  * @return {Function}
  */
 Jusibe.prototype.getCredits = function (callback) {
-
-  request.get([baseUrl, '/get_credits/'].join(''),
-    this.options, function (error, response, body) {
-      return handleResponse(error, response, body, callback);
-    });
+  return Jusibe.makeRequest('get_credits/', this.options, callback)
 };
 
 /**
@@ -62,33 +54,26 @@ Jusibe.prototype.getCredits = function (callback) {
  */
 Jusibe.prototype.deliveryStatus = function (messageID, callback) {
   var options = Jusibe.merge(this.options, { qs: { message_id: messageID } });
-
-  request.get([baseUrl, '/delivery_status/'].join(''),
-    options, function (error, response, body) {
-      return handleResponse(error, response, body, callback);
-    });
+  return Jusibe.makeRequest('delivery_status/', options, callback)
 };
 
-
-
-// Helpers
 /**
- * Response handler
+ * Make HTTP request
  * @function
- * @param {Object} error Error Object
- * @param {Object} response Response Object
- * @param {Object} body
- * @param {Function} callback Callback function.
+ * @param {String} url Request URL
+ * @param {Object} options Request options
+ * @param {Function} callback Callback function
  * @return {Function}
  */
-function handleResponse(error, response, body, callback) {
-  // Failure
-  if (response.statusCode !== 200) {
-    error = body;
-    body = null;
-  }
+Jusibe.makeRequest = function (url, options, callback) {
+  request([baseUrl, url].join(''), options, function (error, response, body) {
+    if (response.statusCode !== 200) {
+      error = body;
+      body = null;
+    }
 
-  return callback(error, response);
+    return callback(error, response);
+  });
 }
 
 /**
