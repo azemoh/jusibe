@@ -4,7 +4,7 @@
   "description": "JavaScript client for Jusibe.com SMS API service",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec"
+    "test": "mocha -R spec"
   },
   "repository": {
     "type": "git",
