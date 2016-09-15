@@ -9,3 +9,8 @@ node_js:
 
 after_script:
   - npm run test
+  - codeclimate-test-reporter < lcov.info
+
+addons:
+  code_climate:
+    repo_token: ENV['REPO_TOKEN']
