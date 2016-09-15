@@ -1,9 +1,6 @@
 var Jusibe = require('../index.js');
 
-var publicKey = process.env.JUSIBE_PUBLIC_KEY;
-var accessToken = process.env.JUSIBE_ACCESS_TOKEN;
-
-var jusibe = new Jusibe(publicKey, accessToken);
+var jusibe = new Jusibe("YOUR_JUSIBE_PUBLIC_KEY", "YOUR_JUSIBE_ACCESS_TOKEN");
 
 jusibe.getCredits(function (err, res) {
     if (res.statusCode === 200)
