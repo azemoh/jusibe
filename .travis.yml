@@ -9,7 +9,7 @@ node_js:
 
 addons:
   code_climate:
-    repo_token: ENV['REPO_TOKEN']
+    repo_token: ENV['CODECLIMATE_REPO_TOKEN']
 
 after_script:
   - codeclimate-test-reporter < lcov.info
