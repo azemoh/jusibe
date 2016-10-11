@@ -64,7 +64,7 @@ Available as open source under the terms of the [MIT License](http://opensource.
 [npm-image]: https://img.shields.io/npm/v/jusibe.svg
 
 [travis-url]: https://travis-ci.org/azemoh/jusibe
-[travis-image]: https://travis-ci.org/azemoh/jusibe.svg?branch=master
+[travis-image]: https://travis-ci.org/azemoh/jusibe.svg
 
 [codeclimate-url]: https://codeclimate.com/github/azemoh/jusibe
 [codeclimate-image]: https://codeclimate.com/github/azemoh/jusibe/badges/gpa.svg
