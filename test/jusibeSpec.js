@@ -11,7 +11,7 @@ describe('Jusibe', function () {
   it('Should throw an error if no key is provided', function () {
     expect(function () {
       new Jusibe();
-    }).to.throw('Provide both publicKey and accessToken');
+    }).to.throw('Provide both Jusibe PUBLIC_KEY and ACCESS_TOKEN');
   });
 
   it('Can create Jusibe instance', function () {

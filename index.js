@@ -10,8 +10,8 @@ var baseUrl = 'https://jusibe.com/smsapi/';
  */
 function Jusibe(publicKey, accessToken) {
 
-  if (publicKey === undefined || accessToken === undefined) {
-    throw new Error('Provide both publicKey and accessToken');
+  if (!(publicKey || accessToken)) {
+    throw new Error('Provide both Jusibe PUBLIC_KEY and ACCESS_TOKEN');
   }
 
   this.options = {
