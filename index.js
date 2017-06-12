@@ -80,23 +80,5 @@ var methods = {
   }
 };
 
-/**
- * Merge properties in two Objects
- * @function
- * @param {Object} src Source object
- * @param {Object} dest Destination object
- * @return {Object}
- */
-function merge(src, dest) {
-  for (var key in src) {
-    if (src.hasOwnProperty(key)) {
-      dest[key] = src[key];
-    }
-  }
-
-  return dest;
-};
-
-
 Object.assign(Jusibe.prototype, methods);
 module.exports = Jusibe;
