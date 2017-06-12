@@ -1,4 +1,3 @@
-
 var request = require('request');
 var baseUrl = 'https://jusibe.com/smsapi/';
 
@@ -9,9 +8,12 @@ var baseUrl = 'https://jusibe.com/smsapi/';
  * @return {Jusibe}
  */
 function Jusibe(publicKey, accessToken) {
-
   if (!(publicKey || accessToken)) {
     throw new Error('Provide both Jusibe PUBLIC_KEY and ACCESS_TOKEN');
+  }
+
+  if (!(this instanceof Jusibe)) {
+    return new Jusibe(publicKey, accessToken);
   }
 
   this.options = {
@@ -23,58 +25,60 @@ function Jusibe(publicKey, accessToken) {
   };
 }
 
-/**
- * Send SMS
- * @function
- * @param {Object} payload sms Object
- * @param {Function} callback Callback function
- * @return {Function}
- */
-Jusibe.prototype.sendSMS = function (payload, callback) {
-  var options = Jusibe.merge(this.options, { qs: payload });
-  return Jusibe.makeRequest('send_sms/', options, callback)
+var methods = {
+  /**
+   * Send SMS
+   * @function
+   * @param {Object} payload sms Object
+   * @return {Promise}
+   */
+  sendSMS(payload) {
+    var options = Object.assign({ qs: payload }, this.options);
+    return this._makeRequest('send_sms/', options);
+  },
+
+  /**
+   * Get Available Jusibe Credits
+   * @function
+   * @return {Promise}
+   */
+  getCredits() {
+    return this._makeRequest('get_credits/', this.options);
+  },
+
+  /**
+   * Check the delivery status of SMS sent
+   * @function
+   * @param {String} messageID ID of the message
+   * @return {Promise}
+   */
+  deliveryStatus(messageID) {
+    var options = Object.assign({ qs: {
+      message_id: messageID
+    } }, this.options);
+
+    return this._makeRequest('delivery_status/', options);
+  },
+
+  /**
+   * Make HTTP request
+   * @function
+   * @param {String} url Request URL
+   * @param {Object} options Request options
+   * @return {Promise}
+   */
+  _makeRequest(url, options) {
+    return new Promise((resolve, reject) => {
+      request(`${baseUrl}${url}`, options, (error, response, body) => {
+        if (response.statusCode === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      });
+    });
+  }
 };
-
-/**
- * Get Available Jusibe Credits
- * @function
- * @param {Funtion} callback Callback function
- * @return {Function}
- */
-Jusibe.prototype.getCredits = function (callback) {
-  return Jusibe.makeRequest('get_credits/', this.options, callback)
-};
-
-/**
- * Check the delivery status of SMS sent
- * @function
- * @param {String} messageID ID of the message
- * @param {Function} callback Callback function
- * @return {Function}
- */
-Jusibe.prototype.deliveryStatus = function (messageID, callback) {
-  var options = Jusibe.merge(this.options, { qs: { message_id: messageID } });
-  return Jusibe.makeRequest('delivery_status/', options, callback)
-};
-
-/**
- * Make HTTP request
- * @function
- * @param {String} url Request URL
- * @param {Object} options Request options
- * @param {Function} callback Callback function
- * @return {Function}
- */
-Jusibe.makeRequest = function (url, options, callback) {
-  request([baseUrl, url].join(''), options, function (error, response, body) {
-    if (response.statusCode !== 200) {
-      error = body;
-      body = null;
-    }
-
-    return callback(error, response);
-  });
-}
 
 /**
  * Merge properties in two Objects
@@ -83,7 +87,7 @@ Jusibe.makeRequest = function (url, options, callback) {
  * @param {Object} dest Destination object
  * @return {Object}
  */
-Jusibe.merge = function (src, dest) {
+function merge(src, dest) {
   for (var key in src) {
     if (src.hasOwnProperty(key)) {
       dest[key] = src[key];
@@ -93,4 +97,6 @@ Jusibe.merge = function (src, dest) {
   return dest;
 };
 
+
+Object.assign(Jusibe.prototype, methods);
 module.exports = Jusibe;

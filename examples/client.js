@@ -1,39 +1,37 @@
-var Jusibe = require('../index.js');
+const Jusibe = require('../jusibe.js');
 
-var jusibe = new Jusibe("YOUR_JUSIBE_PUBLIC_KEY", "YOUR_JUSIBE_ACCESS_TOKEN");
+const jusibe = new Jusibe("YOUR_JUSIBE_PUBLIC_KEY", "YOUR_JUSIBE_ACCESS_TOKEN");
 
-jusibe.getCredits(function (err, res) {
-    if (res.statusCode === 200)
-      console.log(res.body);
-    else
-      console.log(err);
+jusibe.getCredits()
+  .then(res => {
+    console.log(res.body)
+  })
+  .catch(err => {
+    console.log(err.body);
   });
 
-var payload = {
+const payload = {
   to: '080XXXXXXXX',
   from: 'Jusibe Joe',
-  message: 'Hello From the other side 😎\nI must have called a thousand times.'
+  message: 'Hello From the new APIIIII 😎\nI must have called a thousand times.'
 };
 
-jusibe.sendSMS(payload, function (err, res) {
-  if (res.statusCode === 200) {
+jusibe.sendSMS(payload)
+  .then(res => {
     console.log(res.body);
-
-    jusibe.deliveryStatus(res.body.message_id, function (err, res) {
-      if (res.statusCode === 200)
-        console.log(res.body);
-      else
-        console.log(err);
-    });
-
-  }
-  else
-    console.log(err);
-});
-
-jusibe.deliveryStatus('eq16v6vd26', function (err, res) {
-  if (res.statusCode === 200)
+    return jusibe.deliveryStatus(res.body.message_id);
+  })
+  .then(res => {
     console.log(res.body);
-  else
-    console.log(err);
-});
+  })
+  .catch(err => {
+    console.log(err.body);
+  });
+
+jusibe.deliveryStatus('eq16v6vd26')
+  .then(res => {
+    console.log(res.body);
+  })
+  .catch(err => {
+    console.log(err.body);
+  });
