@@ -1,10 +1,10 @@
 {
   "name": "jusibe",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "JavaScript client for Jusibe.com SMS API service",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "istanbul cover _mocha -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,14 @@
   },
   "homepage": "https://github.com/azemoh/jusibe#readme",
   "dependencies": {
-    "request": "^2.74.0"
+    "request": "^2.81.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.0.2"
+    "chai": "^4.0.2",
+    "codeclimate-test-reporter": "^0.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "nock": "^9.0.13",
+    "vcr": "^0.0.4"
   }
 }

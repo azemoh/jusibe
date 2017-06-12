@@ -4,12 +4,6 @@ node_js:
   - node
   - 5
   - 4
-  - 0.12
-  - 0.10
-
-addons:
-  code_climate:
-    repo_token: ENV['CODECLIMATE_REPO_TOKEN']
 
 after_script:
-  - codeclimate-test-reporter < lcov.info
+  - node node_modules/codeclimate-test-reporter/bin/codeclimate < coverage/lcov.info

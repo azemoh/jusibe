@@ -1,73 +1,81 @@
+const expect = require('chai').expect;
+const Jusibe = require('../index');
+var record = require('./record');
 
-var chai = require('chai');
-var assert = chai.assert;
-var expect = chai.expect;
+const public_key = process.env.JUSIBE_PUBLIC_KEY;
+const access_token = process.env.JUSIBE_ACCESS_TOKEN;
+const phoneNumber = process.env.PHONE_NUMBER;
 
-var Jusibe = require('../index.js');
+const jusibeClient = new Jusibe(public_key, access_token);
 
-describe('Jusibe', function () {
-  var jusibe = new Jusibe('public_key', 'access_token');
+const payload = {
+  to: phoneNumber,
+  from: 'Jusibe Joe',
+  message: 'Hello From the new APIIIII 😎\nI must have called a thousand times.'
+};
 
-  it('Should throw an error if no key is provided', function () {
-    expect(function () {
+describe('Jusibe', () => {
+  const jusibe = new Jusibe('public_key', 'access_token');
+
+  it('Should throw an error if no key is provided', () => {
+    expect(() => {
       new Jusibe();
     }).to.throw('Provide both Jusibe PUBLIC_KEY and ACCESS_TOKEN');
   });
 
-  it('Can create Jusibe instance', function () {
+  it('Can create Jusibe instance', () => {
     expect(jusibe).to.be.a('object');
-    assert(jusibe instanceof Jusibe);
+    expect(jusibe).to.be.an.instanceof(Jusibe);
+    expect(Jusibe('public_key', 'access_token')).to.be.an.instanceof(Jusibe);
   });
 
-  it('Has default options', function () {
+  it('Has default options', () => {
     expect(jusibe.options).to.be.a('object');
   });
 
-  it('Has auth option keys', function () {
+  it('Has auth option keys', () => {
     expect(jusibe.options.auth).to.be.a('object');
-    assert(jusibe.options.auth.user === 'public_key');
-    assert(jusibe.options.auth.pass === 'access_token');
+    expect(jusibe.options.auth.user).to.equal('public_key');
+    expect(jusibe.options.auth.pass).to.equal('access_token');
   });
 });
 
-describe('Jusibe instance methods', function () {
-  it('Has a sendSMS function', function () {
-    expect(Jusibe.prototype['sendSMS']).to.be.a('function');
+describe('Jusibe API', () => {
+  var recorder = record('smsapi');
+  before(recorder.before);
+
+  describe('#getCredits: can check SMS credits', () => {
+    it('succeeds', () =>
+      jusibeClient.getCredits()
+        .then(res => {
+          expect(res.body.sms_credits).to.exist;
+          expect(res.statusCode).to.equal(200);
+        }));
   });
 
-  it('Has a getCredits function', function () {
-    expect(Jusibe.prototype['getCredits']).to.be.a('function');
+  describe('#sendSMS', () => {
+    it('succeeds', () =>
+      jusibeClient.sendSMS(payload)
+        .then(res => {
+          expect(res.body.status).to.equal('Sent');
+          expect(res.statusCode).to.equal(200);
+        }));
   });
 
-  it('Has a deliveryStatus function', function () {
-    expect(Jusibe.prototype['deliveryStatus']).to.be.a('function');
+  describe('#deliveryStatus: can check the delivery status of a message', () => {
+    it('succeeds', () =>
+      jusibeClient.deliveryStatus('eq16v6vd26')
+        .then(res => {
+          expect(res.body.status).to.equal('Delivered');
+          expect(res.statusCode).to.equal(200);
+        }));
+
+    it('Invalid message ID for an invalid id', () =>
+      jusibeClient.deliveryStatus('eq166vd26')
+        .catch((err) => {
+          expect(err.body.invalid_message_id).to.equal('Invalid message ID');
+        }));
   });
+
+  after(recorder.after);
 });
-
-describe('Jusibe.merge', function () {
-  it('Has a merge function', function () {
-    expect(Jusibe['merge']).to.be.a('function');
-  });
-
-  it('Merges 2 objects', function () {
-    var options = {
-      auth: {
-        user: 'publicKey',
-        pass: 'accessToken'
-      },
-      json: true
-    };
-
-    var result = Jusibe.merge(options, { qs: { message_id: "dhwbewu3"} });
-
-    expect(result.auth).not.to.be.null
-    expect(result.json).not.to.be.null
-    expect(result.qs).not.to.be.null
-  });
-});
-
-describe('Jusibe.makeRequest', function () {
-  it('Has a makeRequest function', function () {
-    expect(Jusibe['makeRequest']).to.be.a('function');
-  });
-})
