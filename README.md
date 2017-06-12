@@ -19,12 +19,13 @@ var jusibe = new Jusibe("YOUR_JUSIBE_PUBLIC_KEY", "YOUR_JUSIBE_ACCESS_TOKEN");
 
 ### Check SMS Credits
 ```javascript
-jusibe.getCredits(function (err, res) {
-  if (res.statusCode === 200)
-    console.log(res.body);
-  else
-    console.log(err);
-});
+jusibe.getCredits()
+  .then(res => {
+    console.log(res.body)
+  })
+  .catch(err => {
+    console.log(err.body);
+  });
 ```
 
 ### Send SMS
@@ -35,23 +36,25 @@ var payload = {
   message: 'Hello From the other side 😎\nI must have called a thousand times.'
 };
 
-jusibe.sendSMS(payload, function (err, res) {
-  if (res.statusCode === 200)
+jusibe.sendSMS(payload)
+  .then(res => {
     console.log(res.body);
-  else
-    console.log(err);
-});
+  })
+  .catch(err => {
+    console.log(err.body);
+  });
 
 ```
 
 ### Check SMS status
 ```javascript
-jusibe.deliveryStatus('eq16v6vd26', function (err, res) {
-  if (res.statusCode === 200)
+jusibe.deliveryStatus('eq16v6vd26')
+  .then(res => {
     console.log(res.body);
-  else
-    console.log(err);
-});
+  })
+  .catch(err => {
+    console.log(err.body);
+  });
 ```
 
 ## License
