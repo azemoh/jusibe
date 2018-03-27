@@ -33,7 +33,7 @@ var methods = {
    * @return {Promise}
    */
   sendSMS(payload) {
-    var options = Object.assign({ qs: payload }, this.options);
+    var options = { ...this.options, qs: payload, method: 'POST' };
     return this._makeRequest('send_sms/', options);
   },
 
@@ -53,10 +53,7 @@ var methods = {
    * @return {Promise}
    */
   deliveryStatus(messageID) {
-    var options = Object.assign({ qs: {
-      message_id: messageID
-    } }, this.options);
-
+    var options = { ...this.options, qs: { message_id: messageID } }
     return this._makeRequest('delivery_status/', options);
   },
 
